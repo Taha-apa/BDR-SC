@@ -1,9 +1,10 @@
 import numpy as np
-#based on : https://github.com/canyilu/Block-Diagonal-Representation-for-Subspace-Clustering
-#References :
-#Canyi Lu, Jiashi Feng, Tao Mei, Zhouchen Lin and Shuicheng Yan
+# based on : https://github.com/canyilu/Block-Diagonal-Representation-for-Subspace-Clustering
+# References :
+# Canyi Lu, Jiashi Feng, Tao Mei, Zhouchen Lin and Shuicheng Yan
 # Subspace Clustering by Block Diagonal Representation, 
 # IEEE Transactions on Pattern Analysis and Machine Intelligence, 2019
+# tahaa.p.a78@gmail.com has simply rewritten this code from matlab to python using numpy
 
 def BDR_Solver(X : np.ndarray,k : int,lmbda : float,gamma : float,threshold : float = 1e-3,maxIter : int = 1000):
     n = len(X)
@@ -48,4 +49,4 @@ def BDR_Solver(X : np.ndarray,k : int,lmbda : float,gamma : float,threshold : fl
         diff = max([diff_Z,diff_B])
         if diff < threshold :
             break
-        
+
