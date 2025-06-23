@@ -1,5 +1,5 @@
 lmbda : 10
 gamma : 4
-knn : 4
-stop_thr : 1e-4
+knn : 10
+stop_thr : 1.0e-10
 rho : 1
