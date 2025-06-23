@@ -1,0 +1,9 @@
+dataset_name: synth test
+dataset_dir:
+affinity_dir : ./results/affinity
+out_dir : ./results
+visualize : True
+save_aff : True
+n_clusters : 3
+maxIter: 1000
+modelParam_dir : ./model/model_params/synth_test_config.yaml

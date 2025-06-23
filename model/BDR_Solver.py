@@ -1,4 +1,6 @@
 import numpy as np
+from dataclasses import dataclass
+from tqdm import tqdm
 # based on : https://github.com/canyilu/Block-Diagonal-Representation-for-Subspace-Clustering written by Canyi Lu (canyilu@gmail.com)
 #
 #  References :
@@ -8,7 +10,16 @@ import numpy as np
 # 
 # tahaa.p.a78@gmail.com has rewritten this code from matlab to python using numpy
 
-def BDR_Solver(X : np.ndarray,k : int,lmbda : float,gamma : float,threshold : float = 1e-3,maxIter : int = 1000) -> tuple[np.ndarray,np.ndarray]:
+@dataclass
+class modelConfig:
+    lmbda : float 
+    gamma : float
+    knn : int
+    stop_thr : float
+    rho : int
+
+def BDR_Solver(X : np.ndarray,modelConfig : modelConfig,maxIter : int = 1000) -> tuple[np.ndarray,np.ndarray]:
+    lmbda,gamma,k,threshold,rho = modelConfig.__dict__.values() 
     n = X.shape[1]
     one = np.ones((n,1))
     XtX = np.matmul(X.T,X)
@@ -21,7 +32,7 @@ def BDR_Solver(X : np.ndarray,k : int,lmbda : float,gamma : float,threshold : fl
     Z = np.zeros((n,n))
     W = Z
     B = Z
-    for iter in range (0,maxIter):
+    for iter in tqdm(range(0,maxIter)):
         #updating Z
         Z_old = Z
         #based on (18)

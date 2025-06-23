@@ -1,0 +1,5 @@
+lmbda : 10
+gamma : 4
+knn : 4
+stop_thr : 1e-4
+rho : 1
