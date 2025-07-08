@@ -1,0 +1,9 @@
+dataset_name: extended yaleB
+dataset_dir: ./datasets/EYaleB_2016.mat
+affinity_dir : ./results/affinity
+out_dir : ./results
+visualize : True
+save_aff : True
+n_clusters : 38
+maxIter: 100
+modelParam_dir : ./model/model_params/synth_test_config.yaml

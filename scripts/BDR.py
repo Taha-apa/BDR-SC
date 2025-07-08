@@ -32,15 +32,17 @@ def run(
     result_dir : str = 'results',
     aff_dir : str = 'results/affinity'
 ):
+    data = data.T
+
     X_adj = DataProjection(data)
-    B,Z = BDR_Solver(X_adj,modelparam)
+    B,Z = BDR_Solver(X_adj,modelparam,maxIter=maxIter)
 
     CKsym_B,_ = BuildAdjacency(thrC(B,modelparam.rho))
     grps_B = SpectralClustering(n_clusters=n_clusters,affinity='precomputed').fit_predict(CKsym_B)
-    
+
     CKsym_Z,_ = BuildAdjacency(thrC(Z,modelparam.rho))
     grps_Z = SpectralClustering(n_clusters=n_clusters,affinity='precomputed').fit_predict(CKsym_Z)
-
+   
     #TO BE DONE
     if visualize:
         pass
