@@ -13,7 +13,7 @@ class Args:
     n_clusters : int
     maxIter: int
     modelParam_dir : str
-    
+    pca_dim : int
 @dataclass
 class synthDataArgs:
     N:int

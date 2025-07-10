@@ -1,0 +1,10 @@
+dataset_name: usps
+dataset_dir: ./datasets/usps.pkl
+affinity_dir : ./results/affinity
+out_dir : ./results
+visualize : True
+save_aff : True
+n_clusters : 10
+maxIter: 100
+modelParam_dir : ./model/model_params/synth_test_config.yaml
+pca_dim : 0

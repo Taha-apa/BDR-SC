@@ -24,7 +24,8 @@ def BDR_Solver(X : np.ndarray,modelConfig : modelConfig,maxIter : int = 1000) ->
     one = np.ones((n,1))
     XtX = np.matmul(X.T,X)
     I = np.identity(n)
-    invXtXI = np.divide(I , (XtX + lmbda * I))
+
+    invXtXI = np.linalg.inv(XtX + lmbda * I)
     invXtXI[np.isnan(invXtXI)] = 0
     gammaOverLambda = gamma/lmbda
 

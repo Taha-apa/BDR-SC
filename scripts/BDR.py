@@ -30,19 +30,18 @@ def run(
     visualize : bool = False,
     save_affnt : bool = True,
     result_dir : str = 'results',
-    aff_dir : str = 'results/affinity'
+    aff_dir : str = 'results/affinity',
+    pca_dim: int = 0
 ):
+    #DATA HAS TO BE IN SHAPE OF N,D
     data = data.T
-
-    X_adj = DataProjection(data)
+    data = min_max_norm(data)
+    X_adj = DataProjection(data,pca_dim)
+    print(X_adj.shape)
     B,Z = BDR_Solver(X_adj,modelparam,maxIter=maxIter)
 
-    CKsym_B,_ = BuildAdjacency(thrC(B,modelparam.rho))
-    grps_B = SpectralClustering(n_clusters=n_clusters,affinity='precomputed').fit_predict(CKsym_B)
-
-    CKsym_Z,_ = BuildAdjacency(thrC(Z,modelparam.rho))
-    grps_Z = SpectralClustering(n_clusters=n_clusters,affinity='precomputed').fit_predict(CKsym_Z)
-   
+    grps_B, CKsym_B = get_adj_grps(B,modelparam,n_clusters)
+    grps_Z,CKsym_Z = get_adj_grps(Z,modelparam,n_clusters)
     #TO BE DONE
     if visualize:
         pass
@@ -50,5 +49,18 @@ def run(
 
     #TO DO : SAVE EAVLUATION
     return grps_B,grps_Z
+def get_adj_grps(aff,modelParam,n_clusters):
+    CKsym , _ = BuildAdjacency(thrC(aff,modelParam.rho))
+    grps = SpectralClustering(n_clusters=n_clusters,affinity='precomputed').fit_predict(CKsym)
+    return grps, CKsym
 
+def load_affnt(aff_dir):
+    aff = np.load(aff_dir)
+    return aff
+def min_max_norm(A):
+    min_val = np.min(A)
+    max_val = np.max(A)
 
+    # Perform min-max normalization
+    normalized_matrix = (A - min_val) / (max_val - min_val)
+    return A
